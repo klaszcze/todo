@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, UsePipes, ValidationPipe, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ICreateTodo } from './interfaces/ICreateTodo'
 import { ITodo } from './interfaces/ITodo'
@@ -28,5 +28,11 @@ export class AppController {
     const todo = new Todo(createData.title, createData.order)
     this.database[todo.id] = todo
     return todo;
+  }
+
+  @Delete()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  deleteAll(): void {
+    this.database = {}
   }
 }

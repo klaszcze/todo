@@ -79,14 +79,14 @@ describe('AppController (e2e)', () => {
       })
     })
     
-    describe('#DELETE all', () => {
+    describe.only('#DELETE all', () => {
       const subject = deleteAllTodos;
-      test("#DELETE returns status 204", async () => {
+      test.only("#DELETE returns status 204", async () => {
         const response = await subject();
         expect(response.status).toBe(204);
       })
       
-      test("handles delete", async () => {
+      test.only("handles delete", async () => {
         await subject();
         const response = await getAllToDos();
         expect(response.body.length).toBe(0);
