@@ -1,10 +1,10 @@
-import { Controller, Get, Param, Post, Body, UsePipes, ValidationPipe, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, UsePipes, ValidationPipe, Delete, HttpCode, HttpStatus, Patch } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ICreateTodo } from './interfaces/ICreateTodo'
 import { ITodo } from './interfaces/ITodo'
 import { thistle } from 'color-name';
 import { Todo } from './todo'
-import { TodoValidator } from './todo-validator';
+import { TodoValidator, TodoUpdateValidator } from './todo-validator';
 
 @UsePipes(new ValidationPipe())
 
@@ -19,8 +19,8 @@ export class AppController {
   }
 
   @Get('/:id')
-  getTodo() {
-    return { title: 'abc'}
+  getTodo(@Param('id') id: string): ITodo {
+    return this.database[id]
   }
 
   @Post()
@@ -35,4 +35,17 @@ export class AppController {
   deleteAll(): void {
     this.database = {}
   }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  deleteOne(@Param('id') id: string): void {
+    delete this.database[id]
+  }
+  
+  @Patch(':id')
+  updateTodo(@Param('id') id: string, @Body() updateData: TodoUpdateValidator): ITodo {
+    this.database[id] = updateData
+    return this.database[id]
+  }
+
 }

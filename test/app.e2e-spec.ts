@@ -27,10 +27,10 @@ describe('AppController (e2e)', () => {
   describe("todos", () => {
     beforeEach(() => deleteAllTodos())
   
-    describe.only("#GET all", () => {
+    describe("#GET all", () => {
       const subject = getAllToDos;
   
-      test.only("handles get on index", async () => {
+      test("handles get on index", async () => {
         const response = await subject();
         expect(response.status).toBe(200);
       })
@@ -39,13 +39,13 @@ describe('AppController (e2e)', () => {
     describe("#GET one", () => {
       const subject = getToDo;
   
-      test.only("GET with reurned url returns proper todo", async () => {
+      test("GET with reurned url returns proper todo", async () => {
         const todo = await createToDo({title: 'abc'});
         const response = await subject(todo.body.id);
         expect(response.body.title).toEqual('abc')
       })
   
-      test.only("Creating two todos", async () => {
+      test("Creating two todos", async () => {
         const todo1 = await createToDo({title: 'abc'});
         const todo2 = await createToDo({title: 'def'});
         const response1 = await getAllToDos();
@@ -55,10 +55,10 @@ describe('AppController (e2e)', () => {
       })
     })
   
-    describe.only("#POST", () => {
+    describe("#POST", () => {
       const subject = createToDo
       
-      test.only("#POST returns proper output", async () => {
+      test("#POST returns proper output", async () => {
         const body = { title: "abc", order: 112 };
         const response = await subject({ title: "abc", order: 112 });
         expect(response.body.title).toEqual(body.title);
@@ -67,26 +67,26 @@ describe('AppController (e2e)', () => {
         expect(typeof response.body.url).toBe("string");
       })
   
-      test.only("#POST creates new todos", async () => {
+      test("#POST creates new todos", async () => {
         await subject({title: 'abc'});
         const response = await getAllToDos();
         expect(response.body.length).toBe(1);
       }) 
   
-      test.only("#POST without title returns bad request", async () => {
+      test("#POST without title returns bad request", async () => {
         const response = await subject({} as { title: string });
         expect(response.status).toBe(400);
       })
     })
     
-    describe.only('#DELETE all', () => {
+    describe('#DELETE all', () => {
       const subject = deleteAllTodos;
-      test.only("#DELETE returns status 204", async () => {
+      test("#DELETE returns status 204", async () => {
         const response = await subject();
         expect(response.status).toBe(204);
       })
       
-      test.only("handles delete", async () => {
+      test("handles delete", async () => {
         await subject();
         const response = await getAllToDos();
         expect(response.body.length).toBe(0);
@@ -110,11 +110,11 @@ describe('AppController (e2e)', () => {
         expect(response.body.length).toBe(1);
       })
   
-      test("Retrns status 403 in not found", async () => {
-        const todo = await createToDo({ title: "first" })
-        const response = await subject(todo.body.id + 1)
-        expect(response.status).toBe(403);
-      })
+      // test("Retrns status 403 in not found", async () => {
+      //   const todo = await createToDo({ title: "first" })
+      //   const response = await subject(todo.body.id + 1)
+      //   expect(response.status).toBe(403);
+      // })
     });
   
     describe("#PATCH", () => {
