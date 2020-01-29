@@ -6,7 +6,7 @@ import { ICreateTodo } from './interfaces/ICreateTodo';
 import { IUpdateTodo } from './interfaces/IUpdateTodo';
 
 @Injectable()
-export class AppService {
+export class TodoService {
   private database: { [id: number]: ITodo } = {};
 
   getHello(): string {

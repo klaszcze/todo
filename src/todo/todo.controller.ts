@@ -11,7 +11,7 @@ import {
   HttpStatus,
   Patch
 } from "@nestjs/common";
-import { AppService } from "./app.service";
+import { TodoService } from "./todo.service";
 import { ICreateTodo } from "./interfaces/ICreateTodo";
 import { ITodo } from "./interfaces/ITodo";
 import { thistle } from "color-name";
@@ -20,8 +20,8 @@ import { TodoValidator, TodoUpdateValidator } from "./todo-validator";
 
 @UsePipes(new ValidationPipe())
 @Controller("/todos")
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+export class TodoController {
+  constructor(private readonly appService: TodoService) {}
   private database: { [id: number]: ITodo } = {};
 
   @Get()
