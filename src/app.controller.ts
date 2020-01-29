@@ -1,9 +1,12 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ICreateTodo } from './interfaces/ICreateTodo'
 import { ITodo } from './interfaces/ITodo'
 import { thistle } from 'color-name';
 import { Todo } from './todo'
+import { TodoValidator } from './todo-validator';
+
+@UsePipes(new ValidationPipe())
 
 @Controller('/todos')
 export class AppController {
@@ -21,7 +24,7 @@ export class AppController {
   }
 
   @Post()
-  createTodo(@Body() createData: ICreateTodo): ITodo {
+  createTodo(@Body() createData: TodoValidator): ITodo {
     const todo = new Todo(createData.title, createData.order)
     this.database[todo.id] = todo
     return todo;

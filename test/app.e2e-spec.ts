@@ -45,7 +45,7 @@ describe('AppController (e2e)', () => {
         expect(response.body.title).toEqual('abc')
       })
   
-      test("Creating two todos", async () => {
+      test.only("Creating two todos", async () => {
         const todo1 = await createToDo({title: 'abc'});
         const todo2 = await createToDo({title: 'def'});
         const response1 = await getAllToDos();
@@ -73,9 +73,9 @@ describe('AppController (e2e)', () => {
         expect(response.body.length).toBe(1);
       }) 
   
-      test("#POST without title returns bad request", async () => {
+      test.only("#POST without title returns bad request", async () => {
         const response = await subject({} as { title: string });
-        expect(response.status).toBe(403);
+        expect(response.status).toBe(400);
       })
     })
     
