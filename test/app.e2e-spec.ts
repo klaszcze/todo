@@ -27,10 +27,10 @@ describe('AppController (e2e)', () => {
   describe("todos", () => {
     beforeEach(() => deleteAllTodos())
   
-    describe("#GET all", () => {
+    describe.only("#GET all", () => {
       const subject = getAllToDos;
   
-      test("handles get on index", async () => {
+      test.only("handles get on index", async () => {
         const response = await subject();
         expect(response.status).toBe(200);
       })
@@ -39,7 +39,7 @@ describe('AppController (e2e)', () => {
     describe("#GET one", () => {
       const subject = getToDo;
   
-      test("GET with reurned url returns proper todo", async () => {
+      test.only("GET with reurned url returns proper todo", async () => {
         const todo = await createToDo({title: 'abc'});
         const response = await subject(todo.body.id);
         expect(response.body.title).toEqual('abc')
