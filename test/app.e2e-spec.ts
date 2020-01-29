@@ -67,7 +67,7 @@ describe('AppController (e2e)', () => {
         expect(typeof response.body.url).toBe("string");
       })
   
-      test("#POST creates new todos", async () => {
+      test.only("#POST creates new todos", async () => {
         await subject({title: 'abc'});
         const response = await getAllToDos();
         expect(response.body.length).toBe(1);

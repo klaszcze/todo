@@ -1,13 +1,18 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service';
+import { ICreateTodo } from './interfaces/ICreateTodo'
+import { ITodo } from './interfaces/ITodo'
+import { thistle } from 'color-name';
+import { Todo } from './todo'
 
 @Controller('/todos')
 export class AppController {
   constructor(private readonly appService: AppService) {}
+  private database:{ [id:number] : ITodo} = {};
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getTodos(): ITodo[] {
+    return Object.values(this.database)
   }
 
   @Get('/:id')
@@ -16,8 +21,9 @@ export class AppController {
   }
 
   @Post()
-  createTodo() {
-    const todo = { title: "abc", order: 112, completed: false, url: 'url' }
-    return todo
+  createTodo(@Body() createData: ICreateTodo): ITodo {
+    const todo = new Todo(createData.title, createData.order)
+    this.database[todo.id] = todo
+    return todo;
   }
 }
