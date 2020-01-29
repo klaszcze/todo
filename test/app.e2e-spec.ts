@@ -55,10 +55,10 @@ describe('AppController (e2e)', () => {
       })
     })
   
-    describe("#POST", () => {
+    describe.only("#POST", () => {
       const subject = createToDo
       
-      test("#POST returns proper output", async () => {
+      test.only("#POST returns proper output", async () => {
         const body = { title: "abc", order: 112 };
         const response = await subject({ title: "abc", order: 112 });
         expect(response.body.title).toEqual(body.title);
