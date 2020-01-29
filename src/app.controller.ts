@@ -26,31 +26,29 @@ export class AppController {
 
   @Get()
   getTodos(): ITodo[] {
-    return Object.values(this.database);
+    return this.appService.getTodos()
   }
 
   @Get("/:id")
   getTodo(@Param("id") id: string): ITodo {
-    return this.database[id];
+    return this.appService.getTodo(id);
   }
 
   @Post()
   createTodo(@Body() createData: TodoValidator): ITodo {
-    const todo = new Todo(createData.title, createData.order);
-    this.database[todo.id] = todo;
-    return todo;
+    return this.appService.createTodo(createData);
   }
 
   @Delete()
   @HttpCode(HttpStatus.NO_CONTENT)
   deleteAll(): void {
-    this.database = {};
+    this.appService.deleteAll();
   }
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
   deleteOne(@Param("id") id: string): void {
-    delete this.database[id];
+    this.appService.deleteOne(id);
   }
 
   @Patch(":id")
@@ -58,11 +56,6 @@ export class AppController {
     @Param("id") id: string,
     @Body() updateData: TodoUpdateValidator
   ): ITodo {
-    const updatedTodo = {
-      ...this.database[id],
-      ...updateData
-    };
-    this.database[id] = updatedTodo;
-    return this.database[id];
+    return this.appService.updateTodo(id, updateData);
   }
 }
